@@ -260,7 +260,7 @@
                 <label style="display:block;font-size:13px;font-weight:600;color:#374151;margin-bottom:8px">Nomor Anggota / NIK</label>
                 <div style="position:relative">
                     <i class="fas fa-id-card" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#94a3b8;font-size:14px"></i>
-                    <input type="text" id="noAnggota" class="input-modern" placeholder="Contoh: 13050007" autocomplete="off" required>
+                    <input type="text" id="noAnggota" class="input-modern" placeholder="Masukkan NIK Anda..." autocomplete="off" required>
                 </div>
                 <p id="loginError" style="display:none;color:#ef4444;font-size:12px;margin-top:6px;font-weight:500">
                     <i class="fas fa-exclamation-circle" style="margin-right:4px"></i>Nomor anggota tidak ditemukan.
@@ -347,21 +347,30 @@
                     <p id="certTotalShu" style="color:#065f46; font-size:52px; font-weight:800; line-height:1.1; letter-spacing:-0.02em;">Rp 0</p>
                 </div>
 
-                <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:40px;">
-                    <div>
-                        <p style="font-size:12px; font-weight:700; color:#475569; margin-bottom:48px;">Pengurus</p>
-                        <p style="font-size:13px; font-weight:700; color:#0f172a; margin-bottom:4px;">( ............................ )</p>
-                        <p style="font-size:11px; color:#94a3b8;">Kopkar AKM</p>
+                <div style="background: #ffffff; border-radius: 16px; padding: 20px 10px; margin-top: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid #f1f5f9; display:grid; grid-template-columns:repeat(3,1fr); gap:10px;">
+                    <div style="display:flex; flex-direction:column; align-items:center; justify-content:space-between;">
+                        <p style="font-size:12px; font-weight:700; color:#475569; margin-bottom:8px;">Pengurus</p>
+                        <img src="https://i.ibb.co.com/v69cBXy0/ageng-ttd.jpg" alt="Tanda Tangan Pengurus" style="height: 65px; object-fit: contain; mix-blend-mode: multiply; margin-bottom: 8px;" crossorigin="anonymous">
+                        <div>
+                            <p style="font-size:13px; font-weight:700; color:#0f172a; margin-bottom:2px;">Ageng Prasongko</p>
+                            <p style="font-size:11px; color:#94a3b8;">Kopkar AKM</p>
+                        </div>
                     </div>
-                    <div>
-                        <p style="font-size:12px; font-weight:700; color:#475569; margin-bottom:48px;">Pengawas</p>
-                        <p style="font-size:13px; font-weight:700; color:#0f172a; margin-bottom:4px;">( ............................ )</p>
-                        <p style="font-size:11px; color:#94a3b8;">Kopkar AKM</p>
+                    <div style="display:flex; flex-direction:column; align-items:center; justify-content:space-between;">
+                        <p style="font-size:12px; font-weight:700; color:#475569; margin-bottom:8px;">Pengawas</p>
+                        <img src="https://i.ibb.co.com/1JKvR0Gh/kadarisman-ttd.jpg" alt="Tanda Tangan Pengawas" style="height: 65px; object-fit: contain; mix-blend-mode: multiply; margin-bottom: 8px;" crossorigin="anonymous">
+                        <div>
+                            <p style="font-size:13px; font-weight:700; color:#0f172a; margin-bottom:2px;">Kadarisman</p>
+                            <p style="font-size:11px; color:#94a3b8;">Kopkar AKM</p>
+                        </div>
                     </div>
-                    <div>
-                        <p style="font-size:12px; font-weight:700; color:#475569; margin-bottom:48px;">Pengelola</p>
-                        <p style="font-size:13px; font-weight:700; color:#0f172a; margin-bottom:4px;">( ............................ )</p>
-                        <p style="font-size:11px; color:#94a3b8;">Kopkar AKM</p>
+                    <div style="display:flex; flex-direction:column; align-items:center; justify-content:space-between;">
+                        <p style="font-size:12px; font-weight:700; color:#475569; margin-bottom:8px;">Pengelola</p>
+                        <img src="https://i.ibb.co.com/Jj2FC9VG/Fedrik-ttd-removebg-preview.png" alt="Tanda Tangan Pengelola" style="height: 65px; object-fit: contain; mix-blend-mode: multiply; margin-bottom: 8px;" crossorigin="anonymous">
+                        <div>
+                            <p style="font-size:13px; font-weight:700; color:#0f172a; margin-bottom:2px;">FEDRIK CHRISTIAN A.C.</p>
+                            <p style="font-size:11px; color:#94a3b8;">Kopkar AKM</p>
+                        </div>
                     </div>
                 </div>
 
@@ -536,10 +545,16 @@
         const n = parseFloat(v);
         return isNaN(n) ? 0 : n;
     };
-    const fRp = n => new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',minimumFractionDigits:0}).format(n);
+    
+    // Perbaikan Format Rp Manual (Menggunakan titik standar ASCII agar terbaca oleh pembuat PDF)
+    const fRp = n => {
+        let rupiah = Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        return 'Rp ' + rupiah;
+    };
+    
     const fRpShort = n => {
-        if(n>=1e9) return 'Rp '+(n/1e9).toFixed(1)+' M';
-        if(n>=1e6) return 'Rp '+(n/1e6).toFixed(1)+' Jt';
+        if(n>=1e9) return 'Rp '+(n/1e9).toFixed(1).replace('.', ',')+' M';
+        if(n>=1e6) return 'Rp '+(n/1e6).toFixed(1).replace('.', ',')+' Jt';
         return fRp(n);
     };
     const initials = name => name.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
@@ -581,7 +596,7 @@
                 errorMsg.style.display = 'block';
             }
         } catch(err) {
-            errorMsg.innerText = 'Kesalahan koneksi ke server. Gunakan data demo.';
+            errorMsg.innerText = 'Kesalahan koneksi ke server. Hubungi Admin.';
             errorMsg.style.display = 'block';
         } finally {
             btn.innerHTML = '<i class="fas fa-sign-in-alt" style="margin-right:8px"></i>Lihat Laporan SHU Saya';
@@ -730,7 +745,7 @@
             filename:     `Sertifikat_SHU_${currentUser.nama}.pdf`,
             image:        { type: 'jpeg', quality: 1 },
             html2canvas:  { 
-                scale: 2,
+                scale: 3, 
                 useCORS: true, 
                 scrollY: 0,
                 width: element.offsetWidth,
