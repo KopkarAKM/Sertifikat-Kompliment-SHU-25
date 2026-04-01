@@ -240,12 +240,6 @@
             #certPrintArea * { visibility: visible; }
             .print-btn { display: none !important; }
         }
-        
-        .demo-chip {
-            padding:4px 12px;background:#e8f5e9;border:1px solid #a7f3d0;border-radius:6px;
-            font-size:12px;font-weight:600;color:#065f46;cursor:pointer;transition:all 0.15s;
-        }
-        .demo-chip:hover { background:#d1fae5; }
     </style>
 </head>
 <body class="flex flex-col" style="min-height:100vh">
@@ -277,15 +271,6 @@
                 <i class="fas fa-sign-in-alt" style="margin-right:8px"></i>Lihat Laporan SHU Saya
             </button>
         </form>
-
-        <div style="margin-top:20px;padding:12px 16px;background:#f8fafc;border-radius:10px;border:1px solid #e2e8f0">
-            <p style="font-size:11px;color:#94a3b8;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">Demo — Gunakan NIK berikut:</p>
-            <div style="display:flex;gap:8px;flex-wrap:wrap">
-                <button onclick="fillDemo('13050007')" class="demo-chip">13050007</button>
-                <button onclick="fillDemo('12100023')" class="demo-chip">12100023</button>
-                <button onclick="fillDemo('09040040')" class="demo-chip">09040040</button>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -558,11 +543,6 @@
         return fRp(n);
     };
     const initials = name => name.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
-
-    function fillDemo(nik) {
-        document.getElementById('noAnggota').value = nik;
-        document.getElementById('noAnggota').focus();
-    }
     
     function generateCertNumber(nik){
         const year = new Date().getFullYear();
