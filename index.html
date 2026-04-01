@@ -223,8 +223,8 @@
         }
         .print-btn:hover { border-color: #059669; color: #059669; background: #f0fdf4; transform: translateY(-2px); }
 
-        .badge-up { background: #dcfce7; color: #15803d; border-radius: 999px; padding: 3px 10px; font-size: 12px; font-weight: 700; }
-        .badge-down { background: #fee2e2; color: red; border-radius: 999px; padding: 3px 10px; font-size: 12px; font-weight: 700; }
+        .badge-up { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border-radius: 999px; padding: 3px 10px; font-size: 12px; font-weight: 800; border: 1px solid rgba(56, 189, 248, 0.4); }
+        .badge-down { background: rgba(239, 68, 68, 0.15); color: #ef4444; border-radius: 999px; padding: 3px 10px; font-size: 12px; font-weight: 800; border: 1px solid rgba(239, 68, 68, 0.4); }
         .main-scroll { overflow-y: auto; flex: 1; }
 
         .tooltip-wrap { position: relative; display: inline-block; }
@@ -645,10 +645,10 @@
         const growthPct = total2024 > 0 ? (selisih / total2024 * 100) : 0;
         const badge = document.getElementById('growthBadge');
         if (selisih >= 0) {
-            badge.className = 'badge-up';
+            badge.style.cssText = 'background: rgba(56, 189, 248, 0.15); color: #38bdf8 !important; border-radius: 999px; padding: 4px 12px; font-size: 13px; font-weight: 800; border: 1px solid rgba(56, 189, 248, 0.4);';
             badge.innerHTML = `<i class="fas fa-arrow-up" style="font-size:10px;margin-right:3px"></i>+${Math.abs(growthPct).toFixed(1)}%`;
         } else {
-            badge.className = 'badge-down';
+            badge.style.cssText = 'background: rgba(255, 50, 50, 0.15); color: #ff4444 !important; border-radius: 999px; padding: 4px 12px; font-size: 13px; font-weight: 800; border: 1px solid rgba(255, 50, 50, 0.4);';
             badge.innerHTML = `<i class="fas fa-arrow-down" style="font-size:10px;margin-right:3px"></i>-${Math.abs(growthPct).toFixed(1)}%`;
         }
 
