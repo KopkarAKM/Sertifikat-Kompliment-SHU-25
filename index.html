@@ -154,21 +154,40 @@
         .progress-track { background: #f1f5f9; border-radius: 999px; height: 8px; overflow: hidden; margin-top: 8px; }
         .progress-bar { height: 100%; border-radius: 999px; transition: width 1s cubic-bezier(0.4,0,0.2,1); }
 
+        /* Wrapper Sertifikat agar responsif di HP */
+        .cert-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            overflow: hidden;
+            padding: 20px 16px;
+        }
+
+        /* Desain Sertifikat (Ukuran Pasti Piksel A4 Lanskap) */
         .cert-outer {
             background: #f4f7f6;
             border-radius: 8px;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
-            width: 297mm;
-            height: 210mm;
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.15);
+            width: 1122px; /* Setara 297mm */
+            height: 793px; /* Setara 210mm */
+            min-width: 1122px;
             position: relative;
             display: flex;
             flex-direction: column;
             justify-content: center;
             overflow: hidden;
             border: 1px solid #e2e8f0;
-            margin: 0 auto;
+            transform-origin: top center;
         }
         
+        @media (max-width: 1160px) {
+            .cert-outer {
+                transform: scale(calc((100vw - 32px) / 1122));
+                margin-bottom: calc(793px * ((100vw - 32px) / 1122) - 793px);
+            }
+        }
+        
+        .cert-pattern {
         .cert-pattern {
             position: absolute; inset: 0;
             background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 15v10m-5-5h10' stroke='%23cbd5e1' stroke-width='1.2' fill='none' opacity='0.7'/%3E%3C/svg%3E");
@@ -181,7 +200,12 @@
             border: 3px solid #d97706;
             border-radius: 8px;
             padding: 24px 64px;
-            display: inline-block;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: max-content;
             box-shadow: 0 10px 25px rgba(217, 119, 6, 0.1);
         }
 
@@ -212,30 +236,22 @@
         }
         .tooltip-wrap:hover .tooltip-text { visibility: visible; opacity: 1; }
 
+        /* Pengaturan PDF Print Bawaan Browser */
         @media print {
             @page { size: A4 landscape; margin: 0; }
-            body, html { background: #fff; margin: 0; padding: 0; }
+            body, html { background: #fff; margin: 0; padding: 0; width: 100%; height: 100%; }
             body * { visibility: hidden; }
             #page1 { 
-                visibility: visible; 
-                position: fixed; 
-                top: 0; left: 0; 
-                width: 100vw; height: 100vh; 
-                display: flex; 
-                align-items: center; 
-                justify-content: center; 
-                padding: 0 !important; 
-                margin: 0 !important; 
-                background: #fff; 
+                visibility: visible; position: absolute; top: 0; left: 0; 
+                width: 100vw; height: 100vh; display: flex; 
+                align-items: center; justify-content: center; 
+                padding: 0 !important; margin: 0 !important; background: #fff; 
             }
+            .cert-wrapper { overflow: hidden; justify-content: center; padding: 0; }
             #certPrintArea { 
-                visibility: visible; 
-                box-shadow: none !important;
-                border: none !important;
-                margin: 0 !important; 
-                transform: scale(0.95) !important;
-                transform-origin: center center;
-                page-break-inside: avoid;
+                visibility: visible; box-shadow: none !important; border: none !important;
+                margin: 0 !important; transform: scale(0.95) !important;
+                transform-origin: center center; page-break-inside: avoid;
             }
             #certPrintArea * { visibility: visible; }
             .print-btn { display: none !important; }
@@ -302,82 +318,84 @@
         </div>
     </nav>
 
-    <div id="page1" class="main-scroll" style="display:flex; flex-direction:column; align-items:center; padding: 40px 16px;">
+    <div id="page1" class="main-scroll" style="display:flex; flex-direction:column;">
         
-        <div id="certPrintArea" class="cert-outer">
-            <div class="cert-pattern"></div>
-            
-            <div class="cert-corner-tl"></div>
-            <div class="cert-corner-tr"></div>
-            <div class="cert-corner-bl"></div>
-            <div class="cert-corner-br"></div>
-
-            <div id="certNumber" style="position:absolute; top:32px; left:48px; font-size:12px; font-weight:600; color:#64748b; font-family:'DM Sans', sans-serif; z-index:20;">
-                No: SHU-2025-0000
-            </div>
-
-            <div id="vipBadge" style="display:none;position:absolute;top:32px;right:48px;flex-direction:column;align-items:center;z-index:20;">
-                <i class="fas fa-award" style="font-size:36px;color:#f59e0b;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.1))"></i>
-                <span style="font-size:8px;font-weight:700;color:#92400e;margin-top:4px;text-transform:uppercase;letter-spacing:0.1em;text-align:center;">VIP Top 10<br>Simpanan</span>
-            </div>
-
-            <div style="position:relative; z-index:10; text-align:center; padding: 0 40px;">
+        <div class="cert-wrapper">
+            <div id="certPrintArea" class="cert-outer">
+                <div class="cert-pattern"></div>
                 
-                <img src="https://i.ibb.co.com/WvTwLMn5/image-1.png" alt="Logo Koperasi" style="height:70px;margin:0 auto 16px;display:block;object-fit:contain;">
+                <div class="cert-corner-tl"></div>
+                <div class="cert-corner-tr"></div>
+                <div class="cert-corner-bl"></div>
+                <div class="cert-corner-br"></div>
 
-                <div style="text-align:center;margin-bottom:28px">
-                    <p style="font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#059669;margin-bottom:4px">Koperasi Karyawan Adaro Karya Mandiri</p>
-                    <h1 class="serif" style="font-size:clamp(28px,5vw,44px);color:#78350f;line-height:1.1;margin-bottom:6px">Sertifikat Apresiasi <em>SHU</em></h1>
-                    <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin:8px 0">
-                        <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,#f59e0b)"></div>
-                        <span style="color:#f59e0b;font-size:16px">✦</span>
-                        <div style="flex:1;height:1px;background:linear-gradient(90deg,#f59e0b,transparent)"></div>
+                <div id="certNumber" style="position:absolute; top:40px; left:48px; font-size:12px; font-weight:600; color:#64748b; font-family:'DM Sans', sans-serif; z-index:20;">
+                    No: SHU-2025-0000
+                </div>
+
+                <div id="vipBadge" style="display:none;position:absolute;top:32px;right:48px;flex-direction:column;align-items:center;z-index:20;">
+                    <i class="fas fa-award" style="font-size:36px;color:#f59e0b;"></i>
+                    <span style="font-size:8px;font-weight:700;color:#92400e;margin-top:4px;text-transform:uppercase;letter-spacing:0.1em;text-align:center;">VIP Top 10<br>Simpanan</span>
+                </div>
+
+                <div style="position:relative; z-index:10; text-align:center; padding: 0 40px;">
+                    
+                    <img src="https://i.ibb.co.com/WvTwLMn5/image-1.png" alt="Logo Koperasi" style="height:70px;margin:0 auto 16px;display:block;object-fit:contain;">
+
+                    <div style="text-align:center;margin-bottom:28px">
+                        <p style="font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#059669;margin-bottom:4px">Koperasi Karyawan Adaro Karya Mandiri</p>
+                        <h1 class="serif" style="font-size:36px; color:#78350f; line-height:1.1; margin-bottom:6px;">Sertifikat Apresiasi <em>SHU</em></h1>
+                        <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin:8px 0">
+                            <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,#f59e0b)"></div>
+                            <span style="color:#f59e0b;font-size:16px">✦</span>
+                            <div style="flex:1;height:1px;background:linear-gradient(90deg,#f59e0b,transparent)"></div>
+                        </div>
+                        <p style="font-size:13px;font-weight:600;color:#64748b;letter-spacing:0.05em">TAHUN BUKU 2025</p>
                     </div>
-                    <p style="font-size:13px;font-weight:600;color:#64748b;letter-spacing:0.05em">TAHUN BUKU 2025</p>
-                </div>
 
-                <div style="text-align:center;max-width:560px;margin:0 auto 28px">
-                    <p style="color:#64748b; font-size:15px; margin-bottom:8px;">Penghargaan setinggi-tingginya diberikan kepada:</p>
-                    <p id="certName" class="serif" style="color:#065f46; font-size:36px; font-weight:800; margin-bottom:4px; line-height:1.2;">NAMA ANGGOTA</p>
-                    <p style="color:#64748b; font-size:13px; margin-bottom:36px;">Nomor Anggota: <strong id="certNo" style="color:#475569">XXXX</strong></p>
-                </div>
+                    <div style="text-align:center;max-width:560px;margin:0 auto 28px">
+                        <p style="color:#64748b; font-size:15px; margin-bottom:8px;">Penghargaan setinggi-tingginya diberikan kepada:</p>
+                        <p id="certName" class="serif" style="color:#065f46; font-size:36px; font-weight:800; margin-bottom:4px; line-height:1.2;">NAMA ANGGOTA</p>
+                        <p style="color:#64748b; font-size:13px; margin-bottom:36px;">Nomor Anggota: <strong id="certNo" style="color:#475569">XXXX</strong></p>
+                    </div>
 
-                <div class="cert-amount-box" style="margin-bottom:32px">
-                    <p style="color:#64748b; font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:4px;">Total SHU Diterima</p>
-                    <p id="certTotalShu" style="color:#065f46; font-size:52px; font-weight:800; line-height:1.1; letter-spacing:-0.02em;">Rp 0</p>
-                </div>
+                    <div class="cert-amount-box" style="margin-bottom:32px">
+                        <p style="color:#64748b; font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-bottom:4px; text-align:center;">Total SHU Diterima</p>
+                        <p id="certTotalShu" style="color:#065f46; font-size:52px; font-weight:800; line-height:1.1; text-align:center;">Rp 0</p>
+                    </div>
 
-                <div style="background: #ffffff; border-radius: 16px; padding: 20px 10px; margin-top: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid #f1f5f9; display:grid; grid-template-columns:repeat(3,1fr); gap:10px;">
-                    <div style="display:flex; flex-direction:column; align-items:center; justify-content:space-between;">
-                        <p style="font-size:12px; font-weight:700; color:#475569; margin-bottom:8px;">Pengurus</p>
-                        <img src="https://i.ibb.co.com/v69cBXy0/ageng-ttd.jpg" alt="Tanda Tangan Pengurus" style="height: 65px; object-fit: contain; mix-blend-mode: multiply; margin-bottom: 8px;" crossorigin="anonymous">
-                        <div>
-                            <p style="font-size:13px; font-weight:700; color:#0f172a; margin-bottom:2px;">Ageng Prasongko</p>
-                            <p style="font-size:11px; color:#94a3b8;">Kopkar AKM</p>
+                    <div style="background: #ffffff; border-radius: 16px; padding: 20px 10px; margin-top: 10px; margin-left: auto; margin-right: auto; max-width: 900px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid #f1f5f9; display:grid; grid-template-columns:repeat(3,1fr); gap:10px;">
+                        <div style="display:flex; flex-direction:column; align-items:center; justify-content:space-between;">
+                            <p style="font-size:12px; font-weight:700; color:#475569; margin-bottom:8px;">Pengurus</p>
+                            <img src="https://i.ibb.co.com/v69cBXy0/ageng-ttd.jpg" alt="Tanda Tangan Pengurus" style="height: 65px; object-fit: contain; mix-blend-mode: multiply; margin-bottom: 8px;" crossorigin="anonymous">
+                            <div>
+                                <p style="font-size:13px; font-weight:700; color:#0f172a; margin-bottom:2px;">Ageng Prasongko</p>
+                                <p style="font-size:11px; color:#94a3b8;">Kopkar AKM</p>
+                            </div>
+                        </div>
+                        <div style="display:flex; flex-direction:column; align-items:center; justify-content:space-between;">
+                            <p style="font-size:12px; font-weight:700; color:#475569; margin-bottom:8px;">Pengawas</p>
+                            <img src="https://i.ibb.co.com/1JKvR0Gh/kadarisman-ttd.jpg" alt="Tanda Tangan Pengawas" style="height: 65px; object-fit: contain; mix-blend-mode: multiply; margin-bottom: 8px;" crossorigin="anonymous">
+                            <div>
+                                <p style="font-size:13px; font-weight:700; color:#0f172a; margin-bottom:2px;">Kadarisman</p>
+                                <p style="font-size:11px; color:#94a3b8;">Kopkar AKM</p>
+                            </div>
+                        </div>
+                        <div style="display:flex; flex-direction:column; align-items:center; justify-content:space-between;">
+                            <p style="font-size:12px; font-weight:700; color:#475569; margin-bottom:8px;">Pengelola</p>
+                            <img src="https://i.ibb.co.com/Jj2FC9VG/Fedrik-ttd-removebg-preview.png" alt="Tanda Tangan Pengelola" style="height: 65px; object-fit: contain; mix-blend-mode: multiply; margin-bottom: 8px;" crossorigin="anonymous">
+                            <div>
+                                <p style="font-size:13px; font-weight:700; color:#0f172a; margin-bottom:2px;">FEDRIK CHRISTIAN A.C.</p>
+                                <p style="font-size:11px; color:#94a3b8;">Kopkar AKM</p>
+                            </div>
                         </div>
                     </div>
-                    <div style="display:flex; flex-direction:column; align-items:center; justify-content:space-between;">
-                        <p style="font-size:12px; font-weight:700; color:#475569; margin-bottom:8px;">Pengawas</p>
-                        <img src="https://i.ibb.co.com/1JKvR0Gh/kadarisman-ttd.jpg" alt="Tanda Tangan Pengawas" style="height: 65px; object-fit: contain; mix-blend-mode: multiply; margin-bottom: 8px;" crossorigin="anonymous">
-                        <div>
-                            <p style="font-size:13px; font-weight:700; color:#0f172a; margin-bottom:2px;">Kadarisman</p>
-                            <p style="font-size:11px; color:#94a3b8;">Kopkar AKM</p>
-                        </div>
-                    </div>
-                    <div style="display:flex; flex-direction:column; align-items:center; justify-content:space-between;">
-                        <p style="font-size:12px; font-weight:700; color:#475569; margin-bottom:8px;">Pengelola</p>
-                        <img src="https://i.ibb.co.com/Jj2FC9VG/Fedrik-ttd-removebg-preview.png" alt="Tanda Tangan Pengelola" style="height: 65px; object-fit: contain; mix-blend-mode: multiply; margin-bottom: 8px;" crossorigin="anonymous">
-                        <div>
-                            <p style="font-size:13px; font-weight:700; color:#0f172a; margin-bottom:2px;">FEDRIK CHRISTIAN A.C.</p>
-                            <p style="font-size:11px; color:#94a3b8;">Kopkar AKM</p>
-                        </div>
-                    </div>
-                </div>
 
+                </div>
             </div>
         </div>
         
-        <div style="text-align:center; margin-top:32px; display:flex; gap:12px;">
+        <div style="text-align:center; margin-top:10px; padding-bottom:30px; display:flex; gap:12px; justify-content: center;">
             <button onclick="downloadPDF()" class="print-btn">
                 <i class="fas fa-file-pdf" style="color:#059669; font-size:16px;"></i> Simpan PDF
             </button>
@@ -413,7 +431,7 @@
                 <div class="card fade-up delay-1" style="padding:20px;background:linear-gradient(135deg,#0d2820,#065f46);border:none;position:relative;overflow:hidden">
                     <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;background:rgba(52,211,153,0.1);border-radius:50%"></div>
                     <p style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px">Total SHU 2025</p>
-                    <p id="dashTotalShu" style="font-size:clamp(22px,4vw,36px);font-weight:800;color:#fff;letter-spacing:-0.02em">Rp 0</p>
+                    <p id="dashTotalShu" style="font-size:36px;font-weight:800;color:#fff;letter-spacing:-0.02em">Rp 0</p>
                     <div style="margin-top:10px;display:flex;align-items:center;gap:8px">
                         <span id="growthBadge" class="badge-up">— %</span>
                         <span style="font-size:12px;color:rgba(255,255,255,0.5)">vs tahun 2024</span>
@@ -529,12 +547,6 @@
 <script>
     const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyHqDT8VgmFCMqRbn39iefJtJfiBGiNAMnv64pMU_19kwfoGH5nt0zXc0hNKjsnu_VDkQ/exec';
 
-    const dbMockup = {
-        "13050007": { nama:"ERWINSYAH, SE", simpanan:7625000, shu2024:{total:1265000}, shu2025:{modal:537500,belanja:154238,total:692000} },
-        "12100023": { nama:"NOPRIMARTATI", simpanan:7375000, shu2024:{total:476000}, shu2025:{modal:519877,belanja:35418,total:555000} },
-        "09040040": { nama:"MUHAMMAD NOOR", simpanan:6725000, shu2024:{total:536000}, shu2025:{modal:474058,belanja:75582,total:550000} }
-    };
-
     let chartInstance = null;
     let currentUser = null;
 
@@ -546,7 +558,7 @@
         return isNaN(n) ? 0 : n;
     };
     
-    // Perbaikan Format Rp Manual (Menggunakan titik standar ASCII agar terbaca oleh pembuat PDF)
+    // Perbaikan Format Rp Manual agar tercetak di PDF
     const fRp = n => {
         let rupiah = Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         return 'Rp ' + rupiah;
@@ -580,11 +592,6 @@
                 const resp = await fetch(`${GOOGLE_SCRIPT_URL}?nik=${inputNo}`);
                 const result = await resp.json();
                 if (result.status === 'success') userData = result.data;
-            }
-            if (!userData) {
-                await new Promise(r => setTimeout(r, 600));
-                userData = dbMockup[inputNo];
-                if (userData) userData.noAnggota = inputNo;
             }
             if (userData) {
                 currentUser = userData;
@@ -740,21 +747,34 @@
 
     function downloadPDF() {
         const element = document.getElementById('certPrintArea');
+        
+        // Simpan skala responsif asli
+        const originalTransform = element.style.transform;
+        const originalMargin = element.style.marginBottom;
+        
+        // Reset ukuran ke 100% khusus untuk cetak PDF agar tidak buram/hilang
+        element.style.transform = 'none';
+        element.style.marginBottom = '0px';
+
         const opt = {
             margin:       0,
             filename:     `Sertifikat_SHU_${currentUser.nama}.pdf`,
             image:        { type: 'jpeg', quality: 1 },
             html2canvas:  { 
-                scale: 3, 
+                scale: 2, 
                 useCORS: true, 
                 scrollY: 0,
-                width: element.offsetWidth,
-                height: element.offsetHeight
+                letterRendering: true,
+                windowWidth: 1122
             }, 
-            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' }
+            jsPDF:        { unit: 'px', format: [1122, 793], orientation: 'landscape' }
         };
         
-        html2pdf().set(opt).from(element).save();
+        html2pdf().set(opt).from(element).save().then(() => {
+            // Kembalikan ukuran untuk layar HP setelah selesai unduh
+            element.style.transform = originalTransform;
+            element.style.marginBottom = originalMargin;
+        });
     }
 
     function logout() {
